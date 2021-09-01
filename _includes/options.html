@@ -1,0 +1,231 @@
+<div x-data="{ options: [] }" class="pb-6 mt-5" >
+  <ul class="space-y-2">
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--skip-turbolinks" x-model="options"
+              id="skip-turbolinks">
+      </div>
+      <div class="inline">
+        <label for="skip-turbolinks">
+          Skip
+          {% include code.html code="turbolinks" %}
+          gem
+        </label>
+        {% include link.html text="homepage" link="https://github.com/turbolinks/turbolinks" %}
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--skip-spring" x-model="options"
+              id="skip-spring">
+      </div>
+      <div class="inline">
+        <label for="skip-spring">
+          Don't install Spring application preloader
+        </label>
+        {% include link.html text="homepage" link="https://github.com/rails/spring" %}
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--skip-listen" x-model="options"
+              id="skip-listen">
+      </div>
+      <div class="inline">
+        <label for="skip-listen">
+          Don't generate configuration that depends on the
+          {% include code.html code="listen" %}
+          gem
+        </label>
+        {% include link.html text="homepage" link="https://github.com/guard/listen" %}
+      </div>
+    </li>
+
+    <li x-data="database()" class="flex items-start space-x-2">
+      <div>
+        <input @click="access()" x-ref="outputDb" type="checkbox" value="" x-model="options"
+              id="database">
+      </div>
+      <div class="flex flex-col">
+        <label class="mb-1.5" for="database">
+          Preconfigure for selected database:
+        </label>
+        <select x-model="selectedDb" class="w-64 px-3 py-2 font-mono bg-gray-100 rounded-md">
+          <template x-for="db in dbs">
+            <option :key="db" :value="db" x-text="db">
+            </option>
+          </template>
+        </select>
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--skip-test" x-model="options"
+              id="skip-test">
+      </div>
+      <div class="inline">
+        <label for="skip-test">
+          Skip test files
+        </label>
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--skip-bundle" x-model="options"
+              id="skip-bundle">
+      </div>
+      <div class="inline">
+        <label for="skip-bundle">
+          Don't run
+          {% include code.html code="bundle install" %}
+        </label>
+        {% include link.html text="homepage" link="https://github.com/webpack/webpack" %}
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--skip-webpack-install" x-model="options"
+              id="skip-webpack-install">
+      </div>
+      <div class="inline">
+        <label for="skip-webpack-install">
+          Don't run
+          {% include code.html code="webpack install" %}
+        </label>
+        {% include link.html text="homepage" link="https://github.com/webpack/webpack" %}
+      </div>
+    </li>
+
+    <li x-data="framework()" class="flex items-start space-x-2">
+      <div>
+        <input @click="access()" x-ref="outputFw" type="checkbox" value="" x-model="options"
+              id="framework">
+      </div>
+      <div class="flex flex-col">
+        <label for="framework" class="mb-1.5">
+          Preconfigure
+          {% include code.html code="webpack" %}
+          for a particular framework:
+        </label>
+        <select x-model="selectedFramework" class="w-64 px-3 py-2 font-mono bg-gray-100 rounded-md">
+          <template x-for="fw in frameworks">
+            <option :key="fw" :value="fw" x-text="fw">
+            </option>
+          </template>
+        </select>
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--api" x-model="options"
+              id="api">
+      </div>
+      <div class="inline">
+        <label for="api">
+          Preconfigure smaller stack for API-only apps
+        </label>
+        {% include link.html text="learn more" link="https://guides.rubyonrails.org/api_app.html#creating-a-new-application" %}
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--minimal" x-model="options"
+              id="minimal">
+      </div>
+      <div class="inline">
+        <label for="minimal">
+          Preconfigure a minimal Rails app
+        </label>
+        {% include link.html text="learn more" link="https://github.com/rails/rails/pull/39282/files" %}
+      </div>
+    </li>
+
+    <li class="flex items-start space-x-2">
+      <div>
+        <input type="checkbox" value="--ruby=PATH" x-model="options"
+              id="ruby-path">
+      </div>
+      <div class="inline">
+        <label for="ruby-path">
+          Provide the path to a Ruby binary of your choice
+        </label>
+      </div>
+    </li>
+
+  </ul>
+
+  <div class="flex items-center justify-between px-3 py-2 mt-6 text-gray-900 bg-gray-100 rounded-md">
+    <div x-text=" 'rails new ' + options.join(' ')" class="font-mono text-sm">
+    </div>
+
+    <div class="flex items-center" x-data="{ copied: false }">
+      <span x-show="copied" class="mr-1 text-sm">
+        copied!
+      </span>
+      <svg @click="$clipboard('rails new ' + options.join(' ')); copied = !copied;"
+           x-show="!copied"
+           class="flex-grow-0 flex-shrink-0 w-6 h-6 text-gray-300 hover:text-gray-600"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0
+                  002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0
+                  012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+      </svg>
+
+      <svg x-show="copied" @mouseleave="copied = false"
+           class="flex-grow-0 flex-shrink-0 w-6 h-6 text-gray-300 hover:text-gray-600"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0
+                  00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0
+                  012 2m-6 9l2 2 4-4"></path>
+      </svg>
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+  function database() {
+    return {
+      selectedDb: "postgresql",
+      dbs: [
+        "postgresql",
+        "mysql",
+        "sqlite3",
+        "oracle",
+        "sqlserver",
+        "jdbcmysql",
+        "jdbcsqlite3",
+        "jdbcpostgresql",
+        "jdbc"
+      ],
+      access() {
+        this.$refs.outputDb.value = "--database=" + this.selectedDb
+      }
+    }
+  }
+
+  function framework() {
+    return {
+      selectedFramework: "stimulus",
+      frameworks: [
+        "stimulus",
+        "react",
+        "vue",
+        "elm",
+        "angular"
+      ],
+      access() {
+        this.$refs.outputFw.value = "--webpack=" + this.selectedFramework
+      }
+    }
+  }
+</script>

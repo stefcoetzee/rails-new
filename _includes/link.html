@@ -1,0 +1,8 @@
+{% capture link %}
+  <span>
+    (<a href="{{- include.link -}}"
+        class="text-blue-700 hover:underline"
+      >{{- include.text -}}</a>)
+  </span>
+{% endcapture %}
+{{ link }}
