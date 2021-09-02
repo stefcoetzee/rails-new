@@ -1,9 +1,21 @@
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "" # the subpath of your site, e.g. /blog
-title: "Jekyll with Tailwind" # the name of your site, e.g. ACME Corp.
+title: "Add options to `rails new`" # the name of your site, e.g. ACME Corp.
+
+twitter:
+  username: stef_coetzee
+  card: summary_large_image
 
 plugins:
   - jekyll-postcss
+  - jekyll-seo-tag
+  - jekyll-target-blank
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: https://i.imgur.com/ct3SYtO.png
 
 sass:
   sourcemap: never
