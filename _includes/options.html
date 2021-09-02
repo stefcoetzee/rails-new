@@ -46,7 +46,7 @@
 
     <li x-data="database()" class="flex items-start space-x-2">
       <div>
-        <input @click="access()" x-ref="outputDb" type="checkbox" value="" x-model="options"
+        <input x-on:click="access()" x-ref="outputDb" type="checkbox" value="" x-model="options"
               id="database">
       </div>
       <div class="flex flex-col">
@@ -104,7 +104,7 @@
 
     <li x-data="framework()" class="flex items-start space-x-2">
       <div>
-        <input @click="access()" x-ref="outputFw" type="checkbox" value="" x-model="options"
+        <input x-on:click="access()" x-ref="outputFw" type="checkbox" value="" x-model="options"
               id="framework">
       </div>
       <div class="flex flex-col">
