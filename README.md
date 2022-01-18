@@ -8,3 +8,5 @@ Copy text for `rails new` command.
 
 Jekyll static site, hosted on Netlify, with Tailwind CSS for styling and
 AlpineJS for interactivity.
+
+Dev branch
