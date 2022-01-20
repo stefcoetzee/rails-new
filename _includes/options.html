@@ -3,44 +3,27 @@
 
     <li class="flex items-start space-x-2">
       <div>
-        <input type="checkbox" value="--skip-turbolinks" x-model="options"
-              id="skip-turbolinks">
+        <input type="checkbox" value="--skip-javascript" x-model="options"
+              id="skip-javascript">
       </div>
       <div class="inline">
-        <label for="skip-turbolinks">
-          Skip
-          {% include code.html code="turbolinks" %}
-          gem
+        <label for="skip-javascript">
+          Skip JavaScript files
         </label>
-        {% include link.html text="homepage" link="https://github.com/turbolinks/turbolinks" %}
+        <!-- {% include link.html text="homepage" link="https://github.com/rails/spring" %} -->
       </div>
     </li>
 
     <li class="flex items-start space-x-2">
       <div>
-        <input type="checkbox" value="--skip-spring" x-model="options"
-              id="skip-spring">
+        <input type="checkbox" value="--skip-hotwire" x-model="options"
+              id="skip-hotwire">
       </div>
       <div class="inline">
-        <label for="skip-spring">
-          Don't install Spring application preloader
+        <label for="skip-hotwire">
+          Skip Hotwire integration
         </label>
-        {% include link.html text="homepage" link="https://github.com/rails/spring" %}
-      </div>
-    </li>
-
-    <li class="flex items-start space-x-2">
-      <div>
-        <input type="checkbox" value="--skip-listen" x-model="options"
-              id="skip-listen">
-      </div>
-      <div class="inline">
-        <label for="skip-listen">
-          Don't generate configuration that depends on the
-          {% include code.html code="listen" %}
-          gem
-        </label>
-        {% include link.html text="homepage" link="https://github.com/guard/listen" %}
+        <!-- {% include link.html text="homepage" link="https://github.com/rails/spring" %} -->
       </div>
     </li>
 
@@ -51,7 +34,9 @@
       </div>
       <div class="flex flex-col">
         <label class="mb-1.5" for="database">
-          Preconfigure for selected database:
+          Preconfigure for selected database (defaults to
+          {% include code.html code="sqlite3" %}
+          ):
         </label>
         <select x-model="selectedDb" class="w-64 px-3 py-2 font-mono bg-gray-100 rounded-md">
           <template x-for="db in dbs">
@@ -84,38 +69,24 @@
           Don't run
           {% include code.html code="bundle install" %}
         </label>
-        {% include link.html text="homepage" link="https://github.com/rubygems/rubygems/tree/master/bundler" %}
+        {% include link.html text="learn more" link="https://github.com/rubygems/rubygems/tree/master/bundler" %}
       </div>
     </li>
 
-    <li class="flex items-start space-x-2">
+    <li x-data="js_approach()" class="flex items-start space-x-2">
       <div>
-        <input type="checkbox" value="--skip-webpack-install" x-model="options"
-              id="skip-webpack-install">
-      </div>
-      <div class="inline">
-        <label for="skip-webpack-install">
-          Don't run
-          {% include code.html code="webpack install" %}
-        </label>
-        {% include link.html text="homepage" link="https://github.com/webpack/webpack" %}
-      </div>
-    </li>
-
-    <li x-data="framework()" class="flex items-start space-x-2">
-      <div>
-        <input x-on:click="access()" x-ref="outputFw" type="checkbox" value="" x-model="options"
-              id="framework">
+        <input x-on:click="access()" x-ref="outputApproach" type="checkbox" value="" x-model="options"
+              id="js-approach">
       </div>
       <div class="flex flex-col">
-        <label for="framework" class="mb-1.5">
-          Preconfigure
-          {% include code.html code="webpack" %}
-          for a particular framework:
+        <label for="js-approach" class="mb-1.5">
+          Choose JavaScript approach (defaults to
+          {% include code.html code="importmap" %}
+          ):
         </label>
-        <select x-model="selectedFramework" class="w-64 px-3 py-2 font-mono bg-gray-100 rounded-md">
-          <template x-for="fw in frameworks">
-            <option :key="fw" :value="fw" x-text="fw">
+        <select x-model="selectedApproach" class="w-64 px-3 py-2 font-mono bg-gray-100 rounded-md">
+          <template x-for="approach in approaches">
+            <option :key="approach" :value="approach" x-text="approach">
             </option>
           </template>
         </select>
@@ -195,6 +166,7 @@
 
   </div>
 </div>
+
 <script type="text/javascript">
   function database() {
     return {
@@ -216,18 +188,17 @@
     }
   }
 
-  function framework() {
+  function js_approach() {
     return {
-      selectedFramework: "stimulus",
-      frameworks: [
-        "stimulus",
-        "react",
-        "vue",
-        "elm",
-        "angular"
+      selectedApproach: "importmap",
+      approaches: [
+        "importmap",
+        "esbuild",
+        "rollup",
+        "webpack"
       ],
       access() {
-        this.$refs.outputFw.value = "--webpack=" + this.selectedFramework
+        this.$refs.outputApproach.value = "--javascript=" + this.selectedApproach
       }
     }
   }
