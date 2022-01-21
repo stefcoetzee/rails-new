@@ -6,7 +6,7 @@ Learn what each option does as an added benefit.
 
 Copy text for `rails new` command.
 
-Jekyll static site, hosted on Netlify, with Tailwind CSS for styling and
-AlpineJS for interactivity.
-
-Dev branch
+[Jekyll](https://jekyllrb.com/) static site,
+hosted on [Netlify](https://www.netlify.com/),
+with [Tailwind CSS](https://tailwindcss.com/) for styling and
+[AlpineJS](https://alpinejs.dev/) for interactivity.
