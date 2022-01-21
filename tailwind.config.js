@@ -1,14 +1,10 @@
 module.exports = {
-  purge: {
-    enabled: process.env.JEKYLL_ENV == "production",
-    content:[
-      './_includes/**/*.html',
-      './_layouts/**/*.html',
-      './_posts/*.md',
-      './*.html',
-    ],
-  },
-  darkMode: false,
+  content:[
+    './_includes/**/*.html',
+    './_layouts/**/*.html',
+    './_posts/*.md',
+    './*.html',
+  ],
   theme: {
     extend: {}
   },
