@@ -93,6 +93,25 @@
       </div>
     </li>
 
+    <li x-data="css_processor()" class="flex items-start space-x-2">
+      <div>
+        <input x-on:click="access()" x-ref="outputProcessor" type="checkbox" value="" x-model="options"
+              id="css-processor">
+      </div>
+      <div class="flex flex-col">
+        <label for="css-processor" class="mb-1.5">
+          Choose a CSS processor
+          {%- include link.html text="homepage" link="https://github.com/rails/cssbundling-rails" -%}:
+        </label>
+        <select x-model="selectedProcessor" class="w-64 px-3 py-2 font-mono bg-gray-100 rounded-md">
+          <template x-for="processor in processors">
+            <option :key="processor" :value="processor" x-text="processor">
+            </option>
+          </template>
+        </select>
+      </div>
+    </li>
+
     <li class="flex items-start space-x-2">
       <div>
         <input type="checkbox" value="--api" x-model="options"
@@ -102,7 +121,7 @@
         <label for="api">
           Preconfigure smaller stack for API-only apps
         </label>
-        {% include link.html text="learn more" link="https://guides.rubyonrails.org/api_app.html#creating-a-new-application" %}
+        {%- include link.html text="learn more" link="https://guides.rubyonrails.org/api_app.html#creating-a-new-application" -%}
       </div>
     </li>
 
@@ -199,6 +218,22 @@
       ],
       access() {
         this.$refs.outputApproach.value = "--javascript=" + this.selectedApproach
+      }
+    }
+  }
+
+  function css_processor() {
+    return {
+      selectedProcessor: "tailwind",
+      processors: [
+        "tailwind",
+        "bootstrap",
+        "bulma",
+        "postcss",
+        "sass"
+      ],
+      access() {
+        this.$refs.outputProcessor.value = "--css=" + this.selectedProcessor
       }
     }
   }
